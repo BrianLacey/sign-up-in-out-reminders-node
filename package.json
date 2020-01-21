@@ -1,0 +1,25 @@
+{
+  "name": "coding-test-assignment-node",
+  "version": "1.0.0",
+  "description": "Sign up/in/out and reminder project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Brian Lacey",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^17.1.0",
+    "@sendgrid/mail": "^6.5.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "cron": "^1.8.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.5.1",
+    "twilio": "^3.39.2"
+  },
+  "devDependencies": {}
+}
