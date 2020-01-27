@@ -11,10 +11,11 @@ router.post(
   usersController.register
 );
 router.post("/login", validateBody(user.signInSchema), usersController.signIn);
+router.get('/verify', usersController.verifyUser);
 
 // Auth Routes
 router.use(authenticate);
 router.post("/logout", usersController.signOut);
-router.get("/:id([0-9a-fA-F]{24})", usersController.readUserById)
+router.get("/:id([0-9a-fA-F]{24})", usersController.readUserById);
 
 module.exports = router;

@@ -1,11 +1,11 @@
-const dotenv = require('dotenv').config()
+const dotenv = require("dotenv").config();
 const mongodb = require("./mongodb.js");
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 // const session = require("express-session");
-const router = require('./routes');
+const router = require("./routes");
 
 const port = process.env.PORT || 8080;
 
@@ -22,15 +22,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //To protect the API and allow requests to be accepted from the client.
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Credential", "true");
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header("Access-Control-Allow-Origin", `${process.env.CLIENT_URL}`);
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
   res.header("withCredentials", true);
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Cookie, x-access-token"
   );
-  next();
+  if ("OPTIONS" === req.method) {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
 });
 
 app.use(router);

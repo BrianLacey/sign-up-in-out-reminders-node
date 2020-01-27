@@ -2,12 +2,14 @@ const usersService = require("../services/users.service.js");
 const userManagers = require("../managers/userManagers.js");
 const reminderManagers = require("../managers/reminderManagers.js");
 const jwt = require("jsonwebtoken");
+const authenticate = require("../helpers/authenticate");
 
 module.exports = {
   register: register,
   signIn: signIn,
   signOut: signOut,
-  readUserById: readUserById
+  readUserById: readUserById,
+  verifyUser: verifyUser
 };
 
 async function register(req, res) {
@@ -37,7 +39,7 @@ async function signIn(req, res) {
   try {
     let user = await userManagers.signInHelper(req.model);
     if (!user) {
-      res.status(401).send("There was an error with the login");
+      res.status(401).send("There was an error with the login.");
     } else {
       id = user._id.toString();
       const token = jwt.sign({ id: id }, process.env.JWT_SECRET_KEY, {
@@ -47,7 +49,7 @@ async function signIn(req, res) {
         .status(200)
         .cookie("Auth", token)
         .json("You're successfully signed in!");
-        reminderManagers.dbRemindersCronjobs(id)
+      reminderManagers.dbRemindersCronjobs(id);
     }
   } catch (err) {
     res.status(500).send(err.message);
@@ -69,4 +71,12 @@ function readUserById(req, res) {
       res.status(200).json(user);
     })
     .catch(err => res.status(400).json(err.message));
+}
+
+async function verifyUser(req, res) {
+  try {
+    await authenticate(req, res);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 }
