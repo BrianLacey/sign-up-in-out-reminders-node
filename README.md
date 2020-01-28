@@ -9,6 +9,6 @@ Rename "Node.env" file I have sent to you to ".env" and place in the root of the
 
 Run "npm install" to install dependencies.
 
-Install MongoDB and start in Bash by navigating to MongoDB in your directory and run "mongod" command.
+Install MongoDB and start in Bash by navigating to MongoDB in your system directory and run "mongod" command.
 
 Run "node app.js" to start API.
